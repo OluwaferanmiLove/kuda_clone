@@ -5,7 +5,7 @@ class Splash extends React.Component {
   render() {
     return (
       <View style={styles.splash}>
-        <Text style={styles.splashText}>!KUDA</Text>
+        <Text style={styles.splashText}>!KUDA.</Text>
       </View>
     );
   }

@@ -9,9 +9,10 @@ import {
   Image,
   Dimensions,
   StatusBar,
+  Animated,
 } from 'react-native';
 import {WelcomeIllustration} from '../../mockData/mockData';
-import KudaBtn from './components/Button';
+import KudaBtn from '../components/Button';
 
 function Next() {
   return (
@@ -35,7 +36,7 @@ function Gotit() {
 
 const {width, height} = Dimensions.get('window');
 
-function IllustrationRender({id, image, title, description}) {
+function IllustrationRender({id, image, titleImage, title, description}) {
   id === 1
     ? () => this.setState({welcomeLast: true})
     : () => this.setState({welcomeLast: null});
@@ -43,17 +44,12 @@ function IllustrationRender({id, image, title, description}) {
     <View style={style.illustrationContent}>
       <Image style={style.illustrationImage} source={image} />
       <View style={style.illustrationText}>
-        <Text style={style.illustrationTitle}>{title}</Text>
+        <View style={style.illustrationHead}>
+          <Image style={style.titleImage} source={titleImage} />
+          <Text style={style.illustrationTitle}>{title}</Text>
+        </View>
         <Text style={style.illustrationDescription}>{description}</Text>
       </View>
-    </View>
-  );
-}
-
-function Steps() {
-  return (
-    <View>
-      <Text>* * *</Text>
     </View>
   );
 }
@@ -64,6 +60,31 @@ class Welcome extends React.Component {
     this.state = {
       welcomeLast: null,
     };
+  }
+
+  scrollX = new Animated.Value(0);
+
+  Steps() {
+    const stepPosition = Animated.divide(this.scrollX, width);
+    return (
+      <View style={style.stepsContainer}>
+        {WelcomeIllustration.map((item, index) => {
+          const opacity = stepPosition.interpolate({
+            inputRange: [index - 1, index, index + 1],
+            outputRange: [0.4, 1, 0.4],
+            extrapolate: 'clamp',
+          });
+          return (
+            <View
+              animated
+              backgroundColor={'#48d38a'}
+              key={`step-${index}`}
+              style={[style.steps, opacity]}
+            />
+          );
+        })}
+      </View>
+    );
   }
   render() {
     const {navigation} = this.props;
@@ -87,19 +108,21 @@ class Welcome extends React.Component {
             <IllustrationRender
               id={item.id}
               image={item.image}
+              titleImage={item.titleImage}
               title={item.title}
               description={item.description}
             />
           )}
           keyExtractor={item => item.id}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {contentOffset: {x: this.scrollx}},
+            },
+          ])}
         />
-        <View style={style.illustrationStep}>
-          <Steps />
-        </View>
+        <View style={style.illustrationStep}>{this.Steps()}</View>
         <View style={style.next}>
-          <KudaBtn
-            btnName={this.state.welcomeLast === true ? 'Got it' : 'Next'}
-          />
+          <KudaBtn btnName={'Next'} />
         </View>
       </View>
     );
@@ -130,27 +153,54 @@ const style = StyleSheet.create({
     width,
     height: height / 3.5,
     resizeMode: 'contain',
-    marginBottom: 50,
+    marginBottom: 80,
+  },
+  illustrationHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
   },
   illustrationText: {
     width: '85%',
     marginLeft: '7.5%',
   },
+  titleImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    marginRight: 10,
+  },
   illustrationTitle: {
     fontSize: 25,
     fontWeight: 'bold',
-    marginBottom: 15,
   },
   illustrationDescription: {
     fontSize: 15,
+    marginBottom: 10,
   },
   illustrationStep: {
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   next: {
     alignItems: 'center',
     marginBottom: 20,
+  },
+  stepsContainer: {
+    display: 'none',
+    position: 'absolute',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
+  steps: {
+    flex: 0,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 4,
   },
 });
 /*<ScrollView

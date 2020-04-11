@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Button,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
-import KudaBtn from '../Auth/components/Button';
+import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
+import KudaBtn from '../components/Button';
+import QusOpt from '../components/QusOpt';
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,12 +11,12 @@ class AuthWelcome extends React.Component {
     return (
       <View style={style.main}>
         <View>
-          <Text style={style.logoText}>!Kuda</Text>
+          <Text style={style.logoText}>!Kuda.</Text>
         </View>
         <View style={style.illustration}>
           <Image
             style={style.illustrationImage}
-            source={require('../../asset/illustration/undraw_mobile_pay_9abj.svg.png')}
+            source={require('../../asset/illustration/promo-support-img.png')}
           />
         </View>
         <View />
@@ -35,14 +28,11 @@ class AuthWelcome extends React.Component {
           btnName={'Join Kuda'}
           onPress={() => navigation.navigate('Signup')}
         />
-        <View style={style.signin}>
-          <Text style={style.signinQuestion}>Have an account?</Text>
-          <TouchableOpacity
-            style={style.signinOption}
-            onPress={() => navigation.navigate('Signin')}>
-            <Text style={style.signinOptionText}> Sign in</Text>
-          </TouchableOpacity>
-        </View>
+        <QusOpt
+          question={'Have an Account'}
+          option={'Sign in'}
+          onPress={() => navigation.navigate('Signin')}
+        />
       </View>
     );
   }
@@ -58,7 +48,7 @@ const style = StyleSheet.create({
   },
   logoText: {
     color: '#40196d',
-    fontSize: 50,
+    fontSize: 40,
     fontWeight: 'bold',
   },
   illustration: {

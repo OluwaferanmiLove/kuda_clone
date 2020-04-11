@@ -1,13 +1,12 @@
 import React from 'react';
 import {View, Text, StyleSheet, Keyboard} from 'react-native';
-import NavBarAuth from '../components/NavBarAuth';
-import KudaInputBar from '../components/InputBar';
-import KudaBtn from '../components/Button';
-import QusOpt from '../components/QusOpt';
+import NavBarAuth from '../../components/NavBarAuth';
+import KudaInputBar from '../../components/InputBar';
+import KudaBtn from '../../components/Button';
+import QusOpt from '../../components/QusOpt';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 
-class signup extends React.Component {
+class TheBasic extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -15,7 +14,6 @@ class signup extends React.Component {
       userDOB: null,
       userBVN: null,
       userRefCode: null,
-      regPage: 1,
     };
   }
 
@@ -66,7 +64,7 @@ class signup extends React.Component {
 
   render() {
     const {navigation} = this.props;
-    return this.state.regPage === 1 ? (
+    return (
       <View style={style.main}>
         <NavBarAuth
           leftText={'<'}
@@ -134,47 +132,13 @@ class signup extends React.Component {
             placeholder={'Referral Code (Optional'}
             onChangeText={text => this.setState({userPassword: text})}
           />
-        </View>
-        <QusOpt
-          question={'No BVN'}
-          option={'Click Here'}
-          onPress={() => navigation.navigate('BVN')}
-        />
-        <KudaBtn btnName={'Continue'} onPress={this.nextPage} />
-      </View>
-    ) : (
-      <View style={style.main}>
-        <NavBarAuth
-          leftText={'<'}
-          rightText={'2/7'}
-          rightTextStyle={style.rightText}
-          leftOnPress={this.prevPage}
-        />
-        <View style={style.headerContainer}>
-          <Text style={style.headerTitle}>Take a selfie</Text>
-          <Text style={style.headerDescription}>
-            We need a clear photo of your face to comfirm who you are.
-          </Text>
-        </View>
-        <View style={style.selfie}>
-          <Ionicons
-            style={style.selfieCamera}
-            name={'ios-camera'}
-            color={'#40196d'}
-            size={50}
+          <QusOpt
+            question={'No BVN'}
+            option={'Click Here'}
+            onPress={() => navigation.navigate('BVN')}
           />
         </View>
-        <View style={style.selfieIllustration}>
-          <View style={style.illustrationContainer}>
-            <View style={style.illustration1} />
-            <Text style={style.illustration1Text}>Wrong</Text>
-          </View>
-          <View style={style.illustrationContainer}>
-            <View style={style.illustration2} />
-            <Text style={style.illustration2Text}>Right</Text>
-          </View>
-        </View>
-        <KudaBtn btnName={'Continue'} onPress={this.signinButton} />
+        <KudaBtn btnName={'Continue'} onPress={this.nextPage} />
       </View>
     );
   }
@@ -239,57 +203,10 @@ const style = StyleSheet.create({
   },
   inputs: {
     alignItems: 'center',
-    width: '80%',
+    width: '85%',
     marginTop: '10%',
-  },
-  selfie: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 100,
-    width: 100,
-    backgroundColor: '#00000020',
-    borderRadius: 100,
-    marginTop: '10%',
-  },
-  selfieCamera: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  selfieIllustration: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '80%',
-    marginTop: '10%',
-  },
-  illustrationContainer: {
-    marginHorizontal: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  illustration1: {
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderWidth: 1,
-    borderRadius: 60,
-    borderColor: 'red',
-  },
-  illustration1Text: {
-    alignItems: 'center',
-  },
-  illustration2: {
-    alignItems: 'center',
-    height: 60,
-    width: 60,
-    borderWidth: 1,
-    borderRadius: 60,
-    borderColor: 'green',
-  },
-  illustration2Text: {
-    alignItems: 'center',
+    marginBottom: '40%',
   },
 });
 
-export default signup;
+export default TheBasic;
