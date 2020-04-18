@@ -4,6 +4,7 @@ import {StyleSheet, TextInput} from 'react-native';
 const KudaInputBar = props => {
   return (
     <TextInput
+      returnKeyType={props.returnKeyType}
       style={style.input}
       margin={props.margin}
       keyboardType={props.keyboardType}

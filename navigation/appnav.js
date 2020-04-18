@@ -1,9 +1,9 @@
 import React from 'react';
+import {AsyncStorage} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AsyncStorage} from '@react-native-community/async-storage';
 
 import Splash from '../screen/splash';
 import Welcome from '../screen/Auth/welcome';
@@ -27,10 +27,29 @@ const homeStack = createStackNavigator();
 
 function homeStackScreen() {
   return (
-    <homeStack.Navigator>
+    <homeStack.Navigator headerMode={'none'}>
       <homeStack.Screen name="Home" component={Home} />
       <homeStack.Screen name="Fund Account" component={fundAcct} />
     </homeStack.Navigator>
+  );
+}
+
+const authStack = createStackNavigator();
+
+function AuthStackScreen() {
+  return (
+    <authStack.Navigator headerMode={'none'}>
+      <authStack.Screen name="Welcome" component={Welcome} />
+      <authStack.Screen name="AuthWelcome" component={AuthWelcome} />
+      <authStack.Screen name="Signin" component={signin} />
+      <authStack.Screen name="2FA" component={TwoFA} />
+      <authStack.Screen name="2FAComfirmed" component={TwoFAComfirmed} />
+      <authStack.Screen name="ResetPin" component={ResetPin} />
+      <authStack.Screen name="PinAuth" component={PinAuth} />
+      <authStack.Screen name="Signup2" component={TheBasic} />
+      <authStack.Screen name="Signup" component={Signup} />
+      <authStack.Screen name="ResetPassword" component={ResetPassword} />
+    </authStack.Navigator>
   );
 }
 
@@ -112,33 +131,37 @@ class App extends React.Component {
         const userToken = await AsyncStorage.getItem('userToken');
         return userToken;
       } catch (error) {
-        this.setState({error: error.message});
+        this.setState({error: error});
       }
     };
 
     getUserToken().then(userToken => {
-      this.setState({isLoading: false});
       this.setState({userToken: userToken});
+    });
+    getUserToken().then(userToken => {
+      this.setState({isLoading: false});
     });
   }
 
   render() {
-    const {navigation} = this.props;
     return this.state.isLoading === true ? (
       <Splash />
     ) : (
-      <AppStackScreen />
+      <NavigationContainer>
+        <appStack.Navigator headerMode={'none'}>
+          {this.state.userToken === null ? (
+            <>
+              <appStack.Screen name="Auth" component={AuthStackScreen} />
+            </>
+          ) : (
+            <>
+              <appStack.Screen name="Home" component={HomeApp} />
+            </>
+          )}
+        </appStack.Navigator>
+      </NavigationContainer>
     );
   }
 }
-
-/*
-function App() {
-  this.state = {
-    userToken: null,
-    isLoading: null,
-  };
-
-}*/
 
 export default App;

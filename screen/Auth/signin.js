@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard} from 'react-native';
+import {View, Text, StyleSheet, Keyboard, AsyncStorage} from 'react-native';
+
 import NavBarAuth from '../components/NavBarAuth';
 import Logo from '../components/logo';
 import KudaInputBar from '../components/InputBar';
@@ -23,6 +24,7 @@ class signin extends React.Component {
     fetch('http://api.kudaclone.tk/api/user/auth', {
       method: 'POST',
       body: JSON.stringify({
+        action: 'login',
         email: this.state.userEmail,
         password: this.state.userPassword,
       }),
@@ -39,6 +41,14 @@ class signin extends React.Component {
       this.setState({loaded: true, error: response.message});
     } else {
       this.setState({loaded: true, userToken: response.token});
+      const setUserToken = async () => {
+        try {
+          await AsyncStorage.setItem('userToken', response.token);
+        } catch (error) {
+          console.warn(error);
+        }
+      };
+      setUserToken();
       this.props.navigation.navigate('Home');
     }
   };

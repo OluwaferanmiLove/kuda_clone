@@ -13,7 +13,7 @@ class TwoFA extends React.Component {
       userEmail: null,
       loaded: true,
       userToken: null,
-      code: new Array(6).fill(0),
+      code: [],
     };
   }
 

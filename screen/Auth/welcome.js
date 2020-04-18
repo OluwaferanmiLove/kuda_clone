@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   FlatList,
   Image,
   Dimensions,
@@ -37,9 +36,6 @@ function Gotit() {
 const {width, height} = Dimensions.get('window');
 
 function IllustrationRender({id, image, titleImage, title, description}) {
-  id === 1
-    ? () => this.setState({welcomeLast: true})
-    : () => this.setState({welcomeLast: null});
   return (
     <View style={style.illustrationContent}>
       <Image style={style.illustrationImage} source={image} />
@@ -59,13 +55,12 @@ class Welcome extends React.Component {
     super();
     this.state = {
       welcomeLast: null,
+      scrollX: new Animated.Value(0),
     };
   }
 
-  scrollX = new Animated.Value(0);
-
   Steps() {
-    const stepPosition = Animated.divide(this.scrollX, width);
+    const stepPosition = Animated.divide(this.state.scrollX, width);
     return (
       <View style={style.stepsContainer}>
         {WelcomeIllustration.map((item, index) => {
@@ -75,11 +70,11 @@ class Welcome extends React.Component {
             extrapolate: 'clamp',
           });
           return (
-            <View
+            <Animated.View
               animated
               backgroundColor={'#48d38a'}
               key={`step-${index}`}
-              style={[style.steps, opacity]}
+              style={[style.steps, {opacity}]}
             />
           );
         })}
@@ -89,8 +84,8 @@ class Welcome extends React.Component {
   render() {
     const {navigation} = this.props;
     return (
-      <View style={style.main}>
-        <StatusBar />
+      <View animated style={style.main}>
+        <StatusBar barStyle="dark-content" backgroundColor="#00000008" />
         <TouchableOpacity
           style={style.skip}
           onPress={() => navigation.navigate('AuthWelcome')}>
@@ -116,7 +111,7 @@ class Welcome extends React.Component {
           keyExtractor={item => item.id}
           onScroll={Animated.event([
             {
-              nativeEvent: {contentOffset: {x: this.scrollx}},
+              nativeEvent: {contentOffset: {x: this.state.scrollX}},
             },
           ])}
         />

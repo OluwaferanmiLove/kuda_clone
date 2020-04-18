@@ -1,11 +1,18 @@
 import React from 'react';
-import {View, Text, StyleSheet, Keyboard} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Keyboard,
+  KeyboardAvoidingView,
+} from 'react-native';
 import NavBarAuth from '../components/NavBarAuth';
 import KudaInputBar from '../components/InputBar';
 import KudaBtn from '../components/Button';
 import QusOpt from '../components/QusOpt';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {RNCamera} from 'react-native-camera';
 
 class signup extends React.Component {
   constructor() {
@@ -67,7 +74,7 @@ class signup extends React.Component {
   render() {
     const {navigation} = this.props;
     return this.state.regPage === 1 ? (
-      <View style={style.main}>
+      <KeyboardAvoidingView behavior={'padding'} style={style.main}>
         <NavBarAuth
           leftText={'<'}
           rightText={'1/7'}
@@ -83,7 +90,7 @@ class signup extends React.Component {
           </Text>
         </View>
         <View style={style.genderContainer}>
-          <TouchableOpacity
+          <TouchableWithoutFeedback
             style={style.genderClickMainMale}
             onPress={this.genderSelectMale}>
             <View
@@ -101,8 +108,8 @@ class signup extends React.Component {
               }>
               Male
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback
             style={style.genderClickMainFemale}
             onPress={this.genderSelectFemale}>
             <View
@@ -120,7 +127,7 @@ class signup extends React.Component {
               }>
               Female
             </Text>
-          </TouchableOpacity>
+          </TouchableWithoutFeedback>
         </View>
         <View style={style.inputs}>
           <KudaInputBar
@@ -141,7 +148,7 @@ class signup extends React.Component {
           onPress={() => navigation.navigate('BVN')}
         />
         <KudaBtn btnName={'Continue'} onPress={this.nextPage} />
-      </View>
+      </KeyboardAvoidingView>
     ) : (
       <View style={style.main}>
         <NavBarAuth

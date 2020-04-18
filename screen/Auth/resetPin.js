@@ -33,41 +33,6 @@ class ResetPin extends React.Component {
             onChangeText={this.textChangeFirst}
             maxLength={1}
           />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeLast}
-            maxLength={1}
-          />
         </View>
         <View style={style.inputs2}>
           <KudaInputBar
@@ -75,41 +40,6 @@ class ResetPin extends React.Component {
             keyboardType={'numeric'}
             placeholder={'-'}
             onChangeText={this.textChangeFirst}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeOthers}
-            maxLength={1}
-          />
-          <KudaInputBar
-            marginHorizontal={'10%'}
-            keyboardType={'numeric'}
-            placeholder={'-'}
-            onChangeText={this.textChangeLast}
             maxLength={1}
           />
         </View>

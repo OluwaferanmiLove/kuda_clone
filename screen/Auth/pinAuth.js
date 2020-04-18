@@ -12,7 +12,7 @@ class PinAuth extends React.Component {
       userEmail: null,
       loaded: true,
       userToken: null,
-      value: new Array(6).fill(0),
+      value: [],
     };
   }
 
@@ -57,6 +57,7 @@ class PinAuth extends React.Component {
                 onChangeText={handleChange}
                 onKeyPress={handleKeyPress}
                 maxLength={1}
+                returnKeyType={'next'}
               />
             );
           })}
